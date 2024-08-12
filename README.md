@@ -1,70 +1,79 @@
-# Getting Started with Create React App
+# D&D Character Creation
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+This project is a Dungeons & Dragons (D&D) character creation tool built with [technology stack, e.g., React, Firebase, etc.]. The goal is to help players easily create and manage their D&D characters with an intuitive web interface.
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- **Character Creation:** Build custom D&D characters from scratch.
+- **Character Management:** Save, update, and manage your characters.
+- **User Authentication:** Secure login and registration using Firebase Authentication.
+- **Real-time Database:** Store character data in Firebase Firestore for real-time updates.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Getting Started
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Prerequisites
 
-### `npm test`
+- Node.js and npm installed on your machine.
+- Firebase account for backend services.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Installation
 
-### `npm run build`
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/GalacticLongshot/D-D-Character-Creation.git
+   cd D-D-Character-Creation
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. **Set up Firebase:**
+   - Create a Firebase project in the [Firebase Console](https://console.firebase.google.com/).
+   - Enable Firestore, Authentication, and any other Firebase services you plan to use.
+   - Create a `.env` file in the root directory with your Firebase credentials:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+     ```env
+     REACT_APP_FIREBASE_API_KEY=your-api-key
+     REACT_APP_FIREBASE_AUTH_DOMAIN=your-auth-domain
+     REACT_APP_FIREBASE_PROJECT_ID=your-project-id
+     REACT_APP_FIREBASE_STORAGE_BUCKET=your-storage-bucket
+     REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your-messaging-sender-id
+     REACT_APP_FIREBASE_APP_ID=your-app-id
+     REACT_APP_FIREBASE_MEASUREMENT_ID=your-measurement-id
+     ```
 
-### `npm run eject`
+4. **Run the application:**
+   ```bash
+   npm start
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+5. **Open your browser:**
+   Visit `http://localhost:3000` to see the application in action.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Contributing
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+We welcome contributions! Please follow these steps to contribute:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-branch`).
+3. Commit your changes (`git commit -m 'Add some feature'`).
+4. Push to the branch (`git push origin feature-branch`).
+5. Open a Pull Request.
 
-## Learn More
+## License
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Acknowledgments
 
-### Code Splitting
+- **[React](https://reactjs.org/):** A JavaScript library for building user interfaces.
+- **[Firebase](https://firebase.google.com/):** Backend services including Firestore and Authentication.
+- **[Dungeons & Dragons](https://dnd.wizards.com/):** The inspiration for this character creation tool.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Contact
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+For any questions, feel free to open an issue or email me at kvega@darkware.net
