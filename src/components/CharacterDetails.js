@@ -2,32 +2,36 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { db, doc, getDoc, auth } from '../firebase';
 import './CharacterDetails.css';
+import { DetailItem, AttributeBox, CombatStatBox } from './CharacterComponents';
 
 const CharacterDetails = () => {
   const { id } = useParams();
   const [character, setCharacter] = useState(null);
-  const [playerName, setPlayerName] = useState('');
-  const [classLevel, setClassLevel] = useState('');
-  const [background, setBackground] = useState('');
-  const [race, setRace] = useState('');
   const [races, setRaces] = useState([]);
-  const [alignment, setAlignment] = useState('');
-  const [experiencePoints, setExperiencePoints] = useState('');
 
-  const [strength, setStrength] = useState('');
-  const [dexterity, setDexterity] = useState('');
-  const [constitution, setConstitution] = useState('');
-  const [intelligence, setIntelligence] = useState('');
-  const [wisdom, setWisdom] = useState('');
-  const [charisma, setCharisma] = useState('');
-
-  const [armorClass, setArmorClass] = useState('');
-  const [initiative, setInitiative] = useState('');
-  const [speed, setSpeed] = useState('');
-  const [currentHitPoints, setCurrentHitPoints] = useState('');
-  const [tempHitPoints, setTempHitPoints] = useState('');
-  const [hitDice, setHitDice] = useState('');
-  const [deathSaves, setDeathSaves] = useState({ success: 0, failure: 0 });
+  const [formData, setFormData] = useState({
+    playerName: '',
+    className: '',
+    level: '',
+    background: '',
+    race: '',
+    alignment: '',
+    experiencePoints: '',
+    money: '',
+    strength: '',
+    dexterity: '',
+    constitution: '',
+    intelligence: '',
+    wisdom: '',
+    charisma: '',
+    armorClass: '',
+    initiative: '',
+    speed: '',
+    currentHitPoints: '',
+    tempHitPoints: '',
+    hitDice: '',
+    deathSaves: { success: 0, failure: 0 }
+  });
 
   useEffect(() => {
     const fetchCharacter = async () => {
@@ -37,27 +41,29 @@ const CharacterDetails = () => {
       if (docSnap.exists()) {
         const data = docSnap.data();
         setCharacter({ id: docSnap.id, ...data });
-        setPlayerName(data.playerName || auth.currentUser?.email || '');
-        setClassLevel(data.classLevel || data.class || '');
-        setBackground(data.background || '');
-        setRace(data.race || '');
-        setAlignment(data.alignment || '');
-        setExperiencePoints(data.experiencePoints || '');
-        setStrength(data.strength || '');
-        setDexterity(data.dexterity || '');
-        setConstitution(data.constitution || '');
-        setIntelligence(data.intelligence || '');
-        setWisdom(data.wisdom || '');
-        setCharisma(data.charisma || '');
-        setArmorClass(data.armorClass || '');
-        setInitiative(data.initiative || '');
-        setSpeed(data.speed || '');
-        setCurrentHitPoints(data.currentHitPoints || '');
-        setTempHitPoints(data.tempHitPoints || '');
-        setHitDice(data.hitDice || '');
-        setDeathSaves(data.deathSaves || { success: 0, failure: 0 });
-      } else {
-        console.log('No such document!');
+        setFormData({
+          playerName: data.playerName || auth.currentUser?.email || '',
+          className: data.className || data.class || '',
+          level: data.level || '',
+          background: data.background || '',
+          race: data.race || '',
+          alignment: data.alignment || '',
+          experiencePoints: data.experiencePoints || '',
+          money: data.money || '',
+          strength: data.strength || '',
+          dexterity: data.dexterity || '',
+          constitution: data.constitution || '',
+          intelligence: data.intelligence || '',
+          wisdom: data.wisdom || '',
+          charisma: data.charisma || '',
+          armorClass: data.armorClass || '',
+          initiative: data.initiative || '',
+          speed: data.speed || '',
+          currentHitPoints: data.currentHitPoints || '',
+          tempHitPoints: data.tempHitPoints || '',
+          hitDice: data.hitDice || '',
+          deathSaves: data.deathSaves || { success: 0, failure: 0 }
+        });
       }
     };
 
@@ -66,260 +72,85 @@ const CharacterDetails = () => {
 
   useEffect(() => {
     const fetchRaces = async () => {
-      try {
-        const response = await fetch('https://www.dnd5eapi.co/api/races');
-        const data = await response.json();
-        setRaces(data.results);
-      } catch (error) {
-        console.error('Error fetching races:', error);
-      }
+      const response = await fetch('https://www.dnd5eapi.co/api/races');
+      const data = await response.json();
+      setRaces(data.results);
     };
 
     fetchRaces();
   }, []);
 
-  const calculateModifier = (score) => {
-    return Math.floor((score - 10) / 2);
-  };
+  const calculateModifier = (score) => Math.floor((score - 10) / 2);
 
-  if (!character) {
-    return <div>Loading...</div>;
-  }
+  if (!character) return <div>Loading...</div>;
+
+  const handleInputChange = (field) => (e) => setFormData({ ...formData, [field]: e.target.value });
+
+  const attributes = [
+    { label: 'Strength', value: formData.strength, modifier: calculateModifier(formData.strength) },
+    { label: 'Dexterity', value: formData.dexterity, modifier: calculateModifier(formData.dexterity) },
+    { label: 'Constitution', value: formData.constitution, modifier: calculateModifier(formData.constitution) },
+    { label: 'Intelligence', value: formData.intelligence, modifier: calculateModifier(formData.intelligence) },
+    { label: 'Wisdom', value: formData.wisdom, modifier: calculateModifier(formData.wisdom) },
+    { label: 'Charisma', value: formData.charisma, modifier: calculateModifier(formData.charisma) },
+  ];
+
+  const combatStats = [
+    { label: 'Armor Class', value: formData.armorClass },
+    { label: 'Initiative', value: formData.initiative },
+    { label: 'Speed', value: formData.speed },
+    { label: 'Hit Dice', value: formData.hitDice }
+  ];
 
   return (
     <div className="character-details">
       <h1>{character.name}</h1>
-      <div className="details-grid">
-        <div className="details-box">
-          <div className="detail-item">
-            <strong>Class & Level:</strong>
-            <input
-              type="text"
-              value={classLevel}
-              onChange={(e) => setClassLevel(e.target.value)}
-            />
-          </div>
-          <div className="detail-item">
-            <strong>Background:</strong>
-            <input
-              type="text"
-              value={background}
-              onChange={(e) => setBackground(e.target.value)}
-            />
-          </div>
-          <div className="detail-item">
-            <strong>Player Name:</strong>
-            <input
-              type="text"
-              value={playerName}
-              onChange={(e) => setPlayerName(e.target.value)}
-            />
-          </div>
-          <div className="detail-item">
-            <strong>Race:</strong>
-            <select
-              value={race}
-              onChange={(e) => setRace(e.target.value)}
-            >
-              <option value="">Select a race</option>
-              {races.map((raceOption) => (
-                <option key={raceOption.index} value={raceOption.name}>
-                  {raceOption.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="detail-item">
-            <strong>Alignment:</strong>
-            <input
-              type="text"
-              value={alignment}
-              onChange={(e) => setAlignment(e.target.value)}
-            />
-          </div>
-          <div className="detail-item">
-            <strong>Experience Points:</strong>
-            <input
-              type="text"
-              value={experiencePoints}
-              onChange={(e) => setExperiencePoints(e.target.value)}
-            />
-          </div>
+
+      {/* New Grid for Details Box */}
+      <div className="details-grid-top">
+        <DetailItem label="Class" value={formData.className} onChange={handleInputChange('className')} />
+        <DetailItem label="Level" value={formData.level} onChange={handleInputChange('level')} />
+        <DetailItem label="Background" value={formData.background} onChange={handleInputChange('background')} />
+        <DetailItem label="Player Name" value={formData.playerName} onChange={handleInputChange('playerName')} />
+        <div className="detail-item">
+          <strong>Race:</strong>
+          <select value={formData.race} onChange={handleInputChange('race')}>
+            <option value="">Select a race</option>
+            {races.map((raceOption) => (
+              <option key={raceOption.index} value={raceOption.name}>
+                {raceOption.name}
+              </option>
+            ))}
+          </select>
         </div>
+        <DetailItem label="Alignment" value={formData.alignment} onChange={handleInputChange('alignment')} />
+        <DetailItem label="Experience Points" value={formData.experiencePoints} onChange={handleInputChange('experiencePoints')} />
+        <DetailItem label="Money" value={formData.money} onChange={handleInputChange('money')} />
+      </div>
 
+      {/* Existing Grids for Attributes and Combat Stats */}
+      <div className="details-grid">
         <div className="attributes-column">
-          <div className="attribute-box">
-            <strong>Strength</strong>
-            <input
-              type="text"
-              value={strength}
-              onChange={(e) => setStrength(e.target.value)}
+          {attributes.map((attr) => (
+            <AttributeBox
+              key={attr.label}
+              label={attr.label}
+              value={attr.value}
+              modifier={attr.modifier}
+              onChange={handleInputChange(attr.label.toLowerCase())}
             />
-            <input
-              type="text"
-              className="modifier-input"
-              value={calculateModifier(strength)}
-              readOnly
-            />
-            <div className="saving-throw">
-              <strong>Saving Throw</strong>
-              <input
-                type="text"
-                value={calculateModifier(strength)}
-                readOnly
-              />
-            </div>
-          </div>
-          
-          <div className="attribute-box">
-            <strong>Dexterity</strong>
-            <input
-              type="text"
-              value={dexterity}
-              onChange={(e) => setDexterity(e.target.value)}
-            />
-            <input
-              type="text"
-              className="modifier-input"
-              value={calculateModifier(dexterity)}
-              readOnly
-            />
-            <div className="saving-throw">
-              <strong>Saving Throw</strong>
-              <input
-                type="text"
-                value={calculateModifier(dexterity)}
-                readOnly
-              />
-            </div>
-          </div>
-
-          <div className="attribute-box">
-            <strong>Constitution</strong>
-            <input
-              type="text"
-              value={constitution}
-              onChange={(e) => setConstitution(e.target.value)}
-            />
-            <input
-              type="text"
-              className="modifier-input"
-              value={calculateModifier(constitution)}
-              readOnly
-            />
-            <div className="saving-throw">
-              <strong>Saving Throw</strong>
-              <input
-                type="text"
-                value={calculateModifier(constitution)}
-                readOnly
-              />
-            </div>
-          </div>
-
-          <div className="attribute-box">
-            <strong>Intelligence</strong>
-            <input
-              type="text"
-              value={intelligence}
-              onChange={(e) => setIntelligence(e.target.value)}
-            />
-            <input
-              type="text"
-              className="modifier-input"
-              value={calculateModifier(intelligence)}
-              readOnly
-            />
-            <div className="saving-throw">
-              <strong>Saving Throw</strong>
-              <input
-                type="text"
-                value={calculateModifier(intelligence)}
-                readOnly
-              />
-            </div>
-          </div>
-
-          <div className="attribute-box">
-            <strong>Wisdom</strong>
-            <input
-              type="text"
-              value={wisdom}
-              onChange={(e) => setWisdom(e.target.value)}
-            />
-            <input
-              type="text"
-              className="modifier-input"
-              value={calculateModifier(wisdom)}
-              readOnly
-            />
-            <div className="saving-throw">
-              <strong>Saving Throw</strong>
-              <input
-                type="text"
-                value={calculateModifier(wisdom)}
-                readOnly
-              />
-            </div>
-          </div>
-
-          <div className="attribute-box">
-            <strong>Charisma</strong>
-            <input
-              type="text"
-              value={charisma}
-              onChange={(e) => setCharisma(e.target.value)}
-            />
-            <input
-              type="text"
-              className="modifier-input"
-              value={calculateModifier(charisma)}
-              readOnly
-            />
-            <div className="saving-throw">
-              <strong>Saving Throw</strong>
-              <input
-                type="text"
-                value={calculateModifier(charisma)}
-                readOnly
-              />
-            </div>
-          </div>
+          ))}
         </div>
 
         <div className="combat-stats-column">
-          <div className="combat-stat-box">
-            <strong>Armor Class</strong>
-            <input
-              type="text"
-              value={armorClass}
-              onChange={(e) => setArmorClass(e.target.value)}
+          {combatStats.map((stat) => (
+            <CombatStatBox
+              key={stat.label}
+              label={stat.label}
+              value={stat.value}
+              onChange={handleInputChange(stat.label.toLowerCase().replace(' ', ''))}
             />
-          </div>
-          <div className="combat-stat-box">
-            <strong>Initiative</strong>
-            <input
-              type="text"
-              value={initiative}
-              onChange={(e) => setInitiative(e.target.value)}
-            />
-          </div>
-          <div className="combat-stat-box">
-            <strong>Speed</strong>
-            <input
-              type="text"
-              value={speed}
-              onChange={(e) => setSpeed(e.target.value)}
-            />
-          </div>
-          <div className="combat-stat-box">
-            <strong>Hit Dice</strong>
-            <input
-              type="text"
-              value={hitDice}
-              onChange={(e) => setHitDice(e.target.value)}
-            />
-          </div>
+          ))}
           <div className="combat-stat-box">
             <strong>Death Saves</strong>
             <div className="death-saves">
@@ -329,10 +160,11 @@ const CharacterDetails = () => {
                   type="number"
                   min="0"
                   max="3"
-                  value={deathSaves.success}
-                  onChange={(e) =>
-                    setDeathSaves({ ...deathSaves, success: e.target.value })
-                  }
+                  value={formData.deathSaves.success}
+                  onChange={(e) => setFormData({
+                    ...formData,
+                    deathSaves: { ...formData.deathSaves, success: e.target.value }
+                  })}
                 />
               </div>
               <div>
@@ -341,10 +173,11 @@ const CharacterDetails = () => {
                   type="number"
                   min="0"
                   max="3"
-                  value={deathSaves.failure}
-                  onChange={(e) =>
-                    setDeathSaves({ ...deathSaves, failure: e.target.value })
-                  }
+                  value={formData.deathSaves.failure}
+                  onChange={(e) => setFormData({
+                    ...formData,
+                    deathSaves: { ...formData.deathSaves, failure: e.target.value }
+                  })}
                 />
               </div>
             </div>
@@ -352,24 +185,17 @@ const CharacterDetails = () => {
         </div>
       </div>
 
-      {/* New Hit Points Section */}
       <div className="hit-points-container">
-        <div className="hit-points-box">
-          <strong>Current Hit Points</strong>
-          <input
-            type="text"
-            value={currentHitPoints}
-            onChange={(e) => setCurrentHitPoints(e.target.value)}
-          />
-        </div>
-        <div className="hit-points-box">
-          <strong>Temporary Hit Points</strong>
-          <input
-            type="text"
-            value={tempHitPoints}
-            onChange={(e) => setTempHitPoints(e.target.value)}
-          />
-        </div>
+        <CombatStatBox
+          label="Current Hit Points"
+          value={formData.currentHitPoints}
+          onChange={handleInputChange('currentHitPoints')}
+        />
+        <CombatStatBox
+          label="Temporary Hit Points"
+          value={formData.tempHitPoints}
+          onChange={handleInputChange('tempHitPoints')}
+        />
       </div>
     </div>
   );

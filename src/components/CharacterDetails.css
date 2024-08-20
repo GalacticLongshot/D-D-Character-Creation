@@ -4,14 +4,30 @@
   border-radius: 8px;
   background: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 100%;  /* Increased width by 10% */
-  max-width: 1500px;  /* Increased max-width proportionally */
+  width: 100%;
+  max-width: 1500px;
   margin: 0 auto;
   text-align: center;
 }
 
 .character-details h1 {
   text-align: center;
+  margin-bottom: 20px;
+}
+
+/* New grid for the details box content */
+.details-grid-top {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Four equal columns */
+  gap: 20px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.top-grid {
+  display: grid;
+  grid-template-columns: 1fr 3fr; /* Empty space on the left, content on the right */
+  width: 100%;
   margin-bottom: 20px;
 }
 
@@ -22,7 +38,24 @@
   margin-bottom: 20px;
 }
 
-.details-box,
+.details-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns layout */
+  grid-gap: 20px; /* Space between grid items */
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  margin-top: 20px;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
 .attributes-column,
 .combat-stats-column {
   padding: 10px;
@@ -48,7 +81,7 @@
 
 .modifier-input,
 .saving-throw input {
-  margin-top: 5px;
+  margin-top: 10px;
   width: 50px;
   text-align: center;
 }
