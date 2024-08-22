@@ -21,17 +21,35 @@ body {
   color: white;
   padding: 20px;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1300px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
   margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .App-header h1 {
   margin: 0;
   font-size: 2.5rem;
 }
+
+.sign-out-button {
+  background-color: #f44336;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.sign-out-button:hover {
+  background-color: #e53935;
+}
+
 
 .main-container {
   display: flex;
@@ -167,4 +185,38 @@ button:hover {
 
 .confirmation-dialog button:last-of-type:hover {
   background-color: #e53935;
+}
+.layout-header {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Space between welcome text and the link */
+}
+
+.layout-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px; /* Space between the welcome text and the link */
+}
+
+.layout-header p {
+  margin: 0px;
+  margin-bottom: 10px;
+}
+
+.layout-header nav {
+  margin-left: 0;
+  margin-bottom: 10px;
+   /* Ensures the link stays next to the welcome text */
+}
+
+.layout-header a {
+  text-decoration: underline;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.layout-header a:hover {
+  color: #0056b3;
+  text-decoration: none;
 }

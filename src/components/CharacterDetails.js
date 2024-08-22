@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { db, doc, getDoc, auth } from '../firebase';
 import './CharacterDetails.css';
 import { DetailItem, AttributeBox, CombatStatBox } from './CharacterComponents';
+import Inventory from './Inventory';
+import SaveLayout from './SaveLayout';
 
 const CharacterDetails = () => {
   const { id } = useParams();
@@ -30,7 +32,8 @@ const CharacterDetails = () => {
     currentHitPoints: '',
     tempHitPoints: '',
     hitDice: '',
-    deathSaves: { success: 0, failure: 0 }
+    deathSaves: { success: 0, failure: 0 },
+    inventory: Array(12).fill({ name: '', quantity: '' }) // Initialize 12 empty slots
   });
 
   useEffect(() => {
@@ -62,7 +65,8 @@ const CharacterDetails = () => {
           currentHitPoints: data.currentHitPoints || '',
           tempHitPoints: data.tempHitPoints || '',
           hitDice: data.hitDice || '',
-          deathSaves: data.deathSaves || { success: 0, failure: 0 }
+          deathSaves: data.deathSaves || { success: 0, failure: 0 },
+          inventory: data.inventory || Array(12).fill({ name: '', quantity: '' })
         });
       }
     };
@@ -86,6 +90,10 @@ const CharacterDetails = () => {
 
   const handleInputChange = (field) => (e) => setFormData({ ...formData, [field]: e.target.value });
 
+  const handleInventoryChange = (newInventory) => {
+    setFormData({ ...formData, inventory: newInventory });
+  };
+
   const attributes = [
     { label: 'Strength', value: formData.strength, modifier: calculateModifier(formData.strength) },
     { label: 'Dexterity', value: formData.dexterity, modifier: calculateModifier(formData.dexterity) },
@@ -106,7 +114,6 @@ const CharacterDetails = () => {
     <div className="character-details">
       <h1>{character.name}</h1>
 
-      {/* New Grid for Details Box */}
       <div className="details-grid-top">
         <DetailItem label="Class" value={formData.className} onChange={handleInputChange('className')} />
         <DetailItem label="Level" value={formData.level} onChange={handleInputChange('level')} />
@@ -128,7 +135,6 @@ const CharacterDetails = () => {
         <DetailItem label="Money" value={formData.money} onChange={handleInputChange('money')} />
       </div>
 
-      {/* Existing Grids for Attributes and Combat Stats */}
       <div className="details-grid">
         <div className="attributes-column">
           {attributes.map((attr) => (
@@ -143,14 +149,16 @@ const CharacterDetails = () => {
         </div>
 
         <div className="combat-stats-column">
-          {combatStats.map((stat) => (
-            <CombatStatBox
-              key={stat.label}
-              label={stat.label}
-              value={stat.value}
-              onChange={handleInputChange(stat.label.toLowerCase().replace(' ', ''))}
-            />
-          ))}
+          <div className="combat-stats-grid">
+            {combatStats.map((stat) => (
+              <CombatStatBox
+                key={stat.label}
+                label={stat.label}
+                value={stat.value}
+                onChange={handleInputChange(stat.label.toLowerCase().replace(' ', ''))}
+              />
+            ))}
+          </div>
           <div className="combat-stat-box">
             <strong>Death Saves</strong>
             <div className="death-saves">
@@ -182,6 +190,8 @@ const CharacterDetails = () => {
               </div>
             </div>
           </div>
+          <Inventory items={formData.inventory} totalSlots={12} onInventoryChange={handleInventoryChange} />
+          <SaveLayout characterId={id} formData={formData} />
         </div>
       </div>
 

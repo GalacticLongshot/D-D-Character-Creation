@@ -1,0 +1,34 @@
+.inventory-section {
+    margin-top: 20px;
+  }
+  
+  .inventory-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    gap: 10px;
+  }
+  
+  .inventory-item {
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+    text-align: center;
+  }
+  
+  .inventory-input {
+    margin: 4px 0;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+  
+  .inventory-quantity {
+    width: 60px;
+    text-align: center;
+    margin: 0 auto;
+  }
+  

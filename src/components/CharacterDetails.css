@@ -1,13 +1,12 @@
 .character-details {
+  width: 100%;
+  max-width: 1100px;
+  margin: 10px auto;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
   background: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 1500px;
-  margin: 0 auto;
-  text-align: center;
 }
 
 .character-details h1 {
@@ -18,57 +17,29 @@
 /* New grid for the details box content */
 .details-grid-top {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* Four equal columns */
-  gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
-.top-grid {
-  display: grid;
-  grid-template-columns: 1fr 3fr; /* Empty space on the left, content on the right */
-  width: 100%;
-  margin-bottom: 20px;
-}
-
+/* Updated grid layout for attributes and combat stats */
 .details-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;  /* Three equal columns */
-  grid-gap: 20px;
-  margin-bottom: 20px;
+  grid-template-columns: 1fr 2fr;
+  gap: 10px;
+  margin-bottom: 5px;
 }
 
-.details-box {
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* Two columns layout */
-  grid-gap: 20px; /* Space between grid items */
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  margin-top: 20px;
-}
-
-.detail-item {
+/* Attributes column with one attribute per box in a single column */
+.attributes-column {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-}
-
-.attributes-column,
-.combat-stats-column {
+  gap: 10px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #f9f9f9;
-}
-
-.attributes-column {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);  /* Two equal columns */
-  gap: 20px;
-  margin-top: 20px;
 }
 
 .attribute-box {
@@ -79,45 +50,48 @@
   text-align: center;
 }
 
+/* New grid for combat stats */
+.combat-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns */
+  grid-template-rows: auto auto; /* Two rows */
+  gap: 8px; /* Reduced gap to minimize vertical space */
+}
+
+.combat-stat-box {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  text-align: center;
+  font-size: 0.9em;
+  line-height: 1.2em;
+}
+
 .modifier-input,
 .saving-throw input {
-  margin-top: 10px;
+  margin-top: 5px;
   width: 50px;
   text-align: center;
 }
 
 .saving-throw {
-  margin-top: 10px;
+  margin-top: 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.combat-stats-column {
-  display: grid;
-  grid-template-columns: 1fr;  /* Single column layout */
-  grid-gap: 20px;
-  margin-top: 20px;
-}
-
-.combat-stat-box {
-  width: 90%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  text-align: center;
-  background-color: #f9f9f9;
-}
-
 .combat-stat-box strong {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 3px;
+  font-size: 0.85em;
 }
 
 .death-saves {
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
 .death-saves div {
@@ -126,7 +100,8 @@
 }
 
 .death-saves label {
-  margin-right: 5px;
+  margin-right: 3px;
+  font-size: 0.85em;
 }
 
 .death-saves input {
@@ -134,26 +109,18 @@
   text-align: center;
 }
 
-.detail-item select {
-  width: 90%;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 14px;
-}
-
 /* Container for the hit points section */
 .hit-points-container {
   display: flex;
   justify-content: center;
-  gap: 20px;
-  margin-top: 20px; /* Adjust this spacing as needed */
+  gap: 10px;
+  margin-top: 10px;
 }
 
 /* Styling for the individual hit points boxes */
 .hit-points-box {
-  width: 350px;
-  padding: 10px;
+  width: 300px;
+  padding: 8px;
   border: 1px solid #ccc;
   border-radius: 8px;
   text-align: center;
