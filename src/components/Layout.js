@@ -1,12 +1,11 @@
 import React from 'react';
 import { Outlet, Link } from 'react-router-dom';
 
-function Layout({ user, handleSignOut }) {
+function Layout({ user }) {
   return (
     <div className="auth-container">
-      <header>
+      <header className="layout-header">
         <p>Welcome, {user.email}</p>
-        <button onClick={handleSignOut}>Sign Out</button>
         <nav>
           <Link to="/">Home</Link>
         </nav>

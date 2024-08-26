@@ -9,8 +9,8 @@ import './App.css';
 
 function App() {
   const [user, setUser] = useState(null);
-  const [email, setEmail] = useState(''); // Define email state
-  const [password, setPassword] = useState(''); // Define password state
+  const [email, setEmail] = useState(''); 
+  const [password, setPassword] = useState(''); 
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -45,7 +45,7 @@ function App() {
   const handleSignOut = async () => {
     try {
       await signOut(auth);
-      setUser(null); // Ensure user state is cleared
+      setUser(null); 
     } catch (error) {
       console.error('Error signing out:', error.message);
     }
@@ -56,11 +56,16 @@ function App() {
       <div className="App">
         <header className="App-header">
           <h1>D&D Character Creator</h1>
+          {user && (
+            <button className="sign-out-button" onClick={handleSignOut}>
+              Sign Out
+            </button>
+          )}
         </header>
         <div className="main-container">
           {user ? (
             <Routes>
-              <Route path="/" element={<Layout user={user} handleSignOut={handleSignOut} />}>
+              <Route path="/" element={<Layout user={user} />}>
                 <Route index element={
                   <div>
                     <CharacterForm />
@@ -77,17 +82,17 @@ function App() {
                   <input
                     type="email"
                     placeholder="Email"
-                    value={email} // Link to email state
-                    onChange={(e) => setEmail(e.target.value)} // Update email state
+                    value={email} 
+                    onChange={(e) => setEmail(e.target.value)} 
                   />
                   <input
                     type="password"
                     placeholder="Password"
-                    value={password} // Link to password state
-                    onChange={(e) => setPassword(e.target.value)} // Update password state
+                    value={password} 
+                    onChange={(e) => setPassword(e.target.value)} 
                   />
-                  <button onClick={handleSignUp}>Sign Up</button> {/* Link to handleSignUp */}
-                  <button onClick={handleSignIn}>Sign In</button> {/* Link to handleSignIn */}
+                  <button onClick={handleSignUp}>Sign Up</button> 
+                  <button onClick={handleSignIn}>Sign In</button> 
                 </div>
               } />
               <Route path="*" element={<Navigate to="/" />} />
